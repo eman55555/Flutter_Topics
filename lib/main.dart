@@ -1,51 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_topics/sound_widget.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:flutter_topics/views/login_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+import 'views/home_screen.dart';
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
 
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
 
-class _MyAppState extends State<MyApp> {
-  var fileNames = ["Air", "Alarm", "Birds", "Cat"];
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+
+void main() async  {
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Future.delayed(const Duration(seconds: 3));
+
+  var prefrenceInstance = await SharedPreferences.getInstance();
+    var email =prefrenceInstance.getString("email");
+    //print(prefrenceInstance.getString("email"));
+      FlutterNativeSplash.remove();
+  runApp( MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
         debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.deepPurple[300],
-            elevation: 3,
-            title: const Text(
-              'Flutter Assets Audio Player',
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-            ),
-          ),
-          body: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 30),
-              child: ListView.separated(
-                  separatorBuilder: (context, index) => const SizedBox(
-                        height: 10,
-                      ),
-                  itemCount: fileNames.length,
-                  itemBuilder: (context, index) => SoundWidget(
-                        name: fileNames[index],
-                        length: fileNames.length,
-                        id: index,
-                      ))),
-        ));
-  }
+        home:email != null ?  const HomeScreen() : LoginScreen()));
 }
+
+  

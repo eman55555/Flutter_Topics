@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_topics/services/preferences.services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/colors.dart';
 import 'components/snackbar_widget.dart';
 import 'components/text_button.dart';
@@ -20,14 +22,13 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     
       appBar: AppBar(
         elevation: 0,
         title: Text(
           "Log in",
-          style: TextStyle(color: Colors.white , fontWeight: FontWeight.bold),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
-        backgroundColor:  Colors.deepPurple[300],
+        backgroundColor: Colors.deepPurple[300],
       ),
       body: SingleChildScrollView(
         child: ConstrainedBox(
@@ -51,7 +52,7 @@ class LoginScreen extends StatelessWidget {
                       "Log In",
                       style: TextStyle(
                           fontSize: 30,
-                          color:  lightBlack,
+                          color: lightBlack,
                           fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(
@@ -62,7 +63,7 @@ class LoginScreen extends StatelessWidget {
                         txt: emailController,
                         widget: Icon(
                           Icons.email,
-                          color:  lightBlack,
+                          color: lightBlack,
                         ),
                         type: TextInputType.emailAddress,
                         obscure: false,
@@ -80,7 +81,7 @@ class LoginScreen extends StatelessWidget {
                         txt: passwordController,
                         widget: Icon(
                           Icons.password,
-                          color:  lightBlack,
+                          color: lightBlack,
                         ),
                         type: TextInputType.text,
                         obscure: true,
@@ -98,7 +99,7 @@ class LoginScreen extends StatelessWidget {
                         TextButtonView(
                           pad: 18,
                           font: 19.0,
-                          press: () {
+                          press: () async {
                             if (!_formKey.currentState!.validate()) {
                               SnackBarWidget(
                                       context: context,
@@ -107,7 +108,12 @@ class LoginScreen extends StatelessWidget {
                                   .makeSnackBar();
                             } else {
                               _formKey.currentState!.save();
-
+                             var prefrenceInstance = await SharedPreferences.getInstance(); 
+                                  
+                              prefrenceInstance
+                                  .setString("email", "$emailController");
+                              prefrenceInstance
+                                  .setString("password", "$passwordController");
                               Navigator.pushAndRemoveUntil(
                                   context,
                                   MaterialPageRoute(
@@ -128,7 +134,7 @@ class LoginScreen extends StatelessWidget {
                         style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
-                            color:  lightBlack),
+                            color: lightBlack),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
                             Navigator.push(

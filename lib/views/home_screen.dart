@@ -11,7 +11,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  var fileNames = ["Air", "Alarm", "Birds", "Cat"];
+
 
   @override
   Widget build(BuildContext context) {
@@ -20,22 +20,14 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.deepPurple[300],
         elevation: 3,
         title: const Text(
-          'Flutter Assets Audio Player',
+          'Home Screen',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
-      body: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 30),
-          child: ListView.separated(
-              separatorBuilder: (context, index) => const SizedBox(
-                    height: 10,
-                  ),
-              itemCount: fileNames.length,
-              itemBuilder: (context, index) => SoundWidget(
-                    name: fileNames[index],
-                    length: fileNames.length,
-                    id: index,
-                  ))),
+      body: const Center(child: Text("Home" ,
+      style: TextStyle(fontWeight: FontWeight.bold,
+      fontSize: 30),
+      ))
     );
   }
 }

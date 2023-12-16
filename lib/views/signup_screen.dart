@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/colors.dart';
 import 'components/snackbar_widget.dart';
 import 'components/text_button.dart';
@@ -148,7 +149,7 @@ class SignupScreen extends StatelessWidget {
                       TextButtonView(
                           pad: 18,
                           font: 19.0,
-                          press: () {
+                          press: () async{
                             //viewmodel.register(userController.text , passwordController.text);
 
                             if (!_formKey.currentState!.validate()) {
@@ -159,10 +160,16 @@ class SignupScreen extends StatelessWidget {
                                   .makeSnackBar();
                             } else {
                               _formKey.currentState!.save();
+                              var prefrenceInstance = await SharedPreferences.getInstance(); 
+                                  
+                              prefrenceInstance
+                                  .setString("email", "$emailController");
+                              prefrenceInstance
+                                  .setString("password", "$passwordController");
                               Navigator.pushAndRemoveUntil(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => HomeScreen()),
+                                      builder: (context) => const HomeScreen()),
                                   (Route<dynamic> route) => false);
                             }
                           },

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_topics/services/preferences.services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/colors.dart';
 import 'components/snackbar_widget.dart';
@@ -7,17 +8,40 @@ import 'components/text_button.dart';
 import 'components/text_form_field.dart';
 import 'home_screen.dart';
 
-class SignupScreen extends StatelessWidget {
+class SignupScreen extends StatefulWidget {
   SignupScreen({super.key});
 
-  final TextEditingController userController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
-  final TextEditingController locationController = TextEditingController();
+  @override
+  State<SignupScreen> createState() => _SignupScreenState();
+}
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+class _SignupScreenState extends State<SignupScreen> {
 
+  late TextEditingController userController;
+
+  late TextEditingController passwordController ;
+
+  late TextEditingController emailController ;
+
+  late TextEditingController phoneController;
+
+  late TextEditingController locationController ;
+
+  late GlobalKey<FormState> _formKey ;
+
+
+@override
+  void initState() {
+    
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+    userController = TextEditingController();
+    passwordController = TextEditingController();
+    locationController =TextEditingController();
+    _formKey = GlobalKey<FormState>();
+
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -160,11 +184,11 @@ class SignupScreen extends StatelessWidget {
                                   .makeSnackBar();
                             } else {
                               _formKey.currentState!.save();
-                              var prefrenceInstance = await SharedPreferences.getInstance(); 
+                            
                                   
-                              prefrenceInstance
+                             PreferencesService.prefs!
                                   .setString("email", "$emailController");
-                              prefrenceInstance
+                              PreferencesService.prefs!
                                   .setString("password", "$passwordController");
                               Navigator.pushAndRemoveUntil(
                                   context,

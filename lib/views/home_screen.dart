@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'components/sound_widget.dart';
-
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

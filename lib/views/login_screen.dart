@@ -1,9 +1,8 @@
-import 'dart:io';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_topics/services/preferences.services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/colors.dart';
 import 'components/snackbar_widget.dart';
 import 'components/text_button.dart';
@@ -11,14 +10,26 @@ import 'components/text_form_field.dart';
 import 'home_screen.dart';
 import 'signup_screen.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   LoginScreen({super.key});
 
-  final TextEditingController emailController = TextEditingController();
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
 
-  final TextEditingController passwordController = TextEditingController();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+class _LoginScreenState extends State<LoginScreen> {
+  late TextEditingController emailController;
 
+  late TextEditingController passwordController;
+
+  late GlobalKey<FormState> _formKey ;
+@override
+  void initState() {
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+    _formKey = GlobalKey<FormState>();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,11 +119,11 @@ class LoginScreen extends StatelessWidget {
                                   .makeSnackBar();
                             } else {
                               _formKey.currentState!.save();
-                             var prefrenceInstance = await SharedPreferences.getInstance(); 
+                      
                                   
-                              prefrenceInstance
+                              PreferencesService.prefs!
                                   .setString("email", "$emailController");
-                              prefrenceInstance
+                              PreferencesService.prefs!
                                   .setString("password", "$passwordController");
                               Navigator.pushAndRemoveUntil(
                                   context,

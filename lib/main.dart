@@ -4,7 +4,7 @@ import 'package:flutter_topics/views/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'views/home_screen.dart';
-
+import 'services/preferences.services.dart';
 
 
 
@@ -13,9 +13,9 @@ void main() async  {
 
   WidgetsFlutterBinding.ensureInitialized();
   await Future.delayed(const Duration(seconds: 3));
-
-  var prefrenceInstance = await SharedPreferences.getInstance();
-    var email =prefrenceInstance.getString("email");
+   
+   PreferencesService.prefs = await SharedPreferences.getInstance();
+    var email = PreferencesService.prefs!.getString("email");
     //print(prefrenceInstance.getString("email"));
       FlutterNativeSplash.remove();
   runApp( MaterialApp(

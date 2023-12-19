@@ -3,7 +3,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 abstract class PreferencesService {
   static  SharedPreferences ? prefs;
 
-
+// static bool checkUserLoggedIn() {
+//     return prefs?.getBool('isLogin') ?? false;
+//     // if not null => true , else => false
+//   }
 // prefs = await SharedPreferences.getInstance();
 
 // saveLoginData(){
